@@ -162,6 +162,7 @@ def run_reminders():
     con.close()
     return sent
 
+init_db()
 
 @app.route('/')
 def index():
