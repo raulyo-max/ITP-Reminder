@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Programare confirmată{% endblock %}
+
+{% block content %}
+<section class="card narrow success-card">
+  <h1>Programare confirmată</h1>
+
+  <p>
+    Mulțumim, {{ client.name }}.
+  </p>
+
+  <p>
+    Programarea pentru <strong>{{ client.plate }}</strong>
+    a fost înregistrată pentru:
+  </p>
+
+  <div class="appointment-confirmation">
+    {{ appointment_at }}
+  </div>
+
+  <p class="muted">
+    Vei putea contacta stația ITP dacă ai nevoie de modificări.
+  </p>
+</section>
+{% endblock %}
