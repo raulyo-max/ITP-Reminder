@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Clienți - ITP Reminder{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Clienți</h1>
+    <p>Adaugă mașinile și datele de expirare ITP.</p>
+  </div>
+</section>
+
+<section class="grid-two">
+  <div class="card">
+    <h2>Adaugă client</h2>
+
+    <form method="post" class="form-grid">
+      <label>
+        Nume client
+        <input type="text" name="name" required placeholder="Ion Popescu">
+      </label>
+
+      <label>
+        Telefon
+        <input type="tel" name="phone" required placeholder="+407xxxxxxxx">
+      </label>
+
+      <label>
+        Număr înmatriculare
+        <input type="text" name="plate" required placeholder="TM-01-ABC">
+      </label>
+
+      <label>
+        Marcă / model
+        <input type="text" name="make_model" placeholder="Volkswagen Golf">
+      </label>
+
+      <label>
+        Data expirării ITP
+        <input type="date" name="expiry_date" required>
+      </label>
+
+      <label class="checkbox-row">
+        <input type="checkbox" name="consent" checked>
+        Clientul poate primi remindere
+      </label>
+
+      <button class="button primary" type="submit">Salvează client</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Clienți existenți</h2>
+
+    {% if clients %}
+      <div class="client-list">
+        {% for c in clients %}
+        <div class="client-item">
+          <div>
+            <strong>{{ c.name }}</strong>
+            <p>{{ c.plate }} · {{ c.make_model or "Fără model" }}</p>
+            <small>ITP: {{ c.expiry_date }}</small>
+          </div>
+
+          <form method="post" action="{{ url_for('delete_client', cid=c.id) }}">
+            <button class="button danger" type="submit">Șterge</button>
+          </form>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty">Nu există încă niciun client.</div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
