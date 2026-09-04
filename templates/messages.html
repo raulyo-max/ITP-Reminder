@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Mesaje - ITP Reminder{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Mesaje</h1>
+    <p>Istoricul reminderelor trimise către clienți.</p>
+  </div>
+</section>
+
+<section class="card">
+  {% if messages %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Telefon</th>
+            <th>Număr auto</th>
+            <th>Mesaj</th>
+            <th>Status</th>
+            <th>Trimis la</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in messages %}
+          <tr>
+            <td>{{ m.name }}</td>
+            <td>{{ m.phone }}</td>
+            <td><strong>{{ m.plate }}</strong></td>
+            <td>{{ m.body }}</td>
+            <td><span class="badge">{{ m.status }}</span></td>
+            <td>{{ m.sent_at }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty">
+      Nu există încă mesaje trimise.
+    </div>
+  {% endif %}
+</section>
+{% endblock %}
