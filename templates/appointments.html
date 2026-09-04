@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Programări - ITP Reminder{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Programări</h1>
+    <p>Vezi programările făcute de clienți din linkul primit prin SMS.</p>
+  </div>
+</section>
+
+<section class="card">
+  {% if appointments %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Telefon</th>
+            <th>Număr auto</th>
+            <th>Data programării</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in appointments %}
+          <tr>
+            <td>{{ a.name }}</td>
+            <td>{{ a.phone }}</td>
+            <td><strong>{{ a.plate }}</strong></td>
+            <td>{{ a.appointment_at }}</td>
+            <td><span class="badge">{{ a.status }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty">
+      Nu există încă programări.
+    </div>
+  {% endif %}
+</section>
+{% endblock %}
