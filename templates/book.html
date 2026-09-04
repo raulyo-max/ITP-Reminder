@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Programare ITP{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Programare ITP</h1>
+    <p>{{ client.name }} · {{ client.plate }}</p>
+  </div>
+</section>
+
+<section class="card narrow">
+  <h2>Alege data și ora</h2>
+
+  <form method="post" class="form-grid">
+    <label>
+      Data și ora programării
+      <input
+        type="datetime-local"
+        name="appointment_at"
+        min="{{ min_dt }}"
+        required
+      >
+    </label>
+
+    <button class="button primary" type="submit">
+      Confirmă programarea
+    </button>
+  </form>
+</section>
+{% endblock %}
