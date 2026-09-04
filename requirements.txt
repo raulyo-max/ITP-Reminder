@@ -1,0 +1,5 @@
+Flask==3.0.3
+APScheduler==3.10.4
+python-dotenv==1.0.1
+twilio==9.3.6
+gunicorn==23.0.0
