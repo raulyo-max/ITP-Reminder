@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - ITP Reminder{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Dashboard</h1>
+    <p>Vezi rapid ce ITP-uri expiră și ce clienți au primit remindere.</p>
+  </div>
+
+  <form method="post" action="{{ url_for('run_reminders_now') }}">
+    <button class="button primary" type="submit">Rulează remindere acum</button>
+  </form>
+</section>
+
+<section class="stats">
+  <div class="card stat">
+    <span class="stat-label">Expiră în 30 zile</span>
+    <strong>{{ due30 }}</strong>
+  </div>
+
+  <div class="card stat">
+    <span class="stat-label">Mesaje trimise azi</span>
+    <strong>{{ messages_today }}</strong>
+  </div>
+
+  <div class="card stat">
+    <span class="stat-label">Programări viitoare</span>
+    <strong>{{ appts }}</strong>
+  </div>
+
+  <div class="card stat">
+    <span class="stat-label">Clienți în sistem</span>
+    <strong>{{ clients|length }}</strong>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-header">
+    <div>
+      <h2>ITP-uri apropiate</h2>
+      <p>Clienții ordonați după data expirării.</p>
+    </div>
+    <a class="button" href="{{ url_for('clients') }}">Adaugă client</a>
+  </div>
+
+  {% if clients %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Mașină</th>
+            <th>Număr</th>
+            <th>Expirare ITP</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in clients %}
+          <tr>
+            <td>{{ c.name }}</td>
+            <td>{{ c.make_model or "-" }}</td>
+            <td><strong>{{ c.plate }}</strong></td>
+            <td>{{ c.expiry_date }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty">
+      Nu ai încă niciun client. Adaugă primul client pentru a testa aplicația.
+    </div>
+  {% endif %}
+</section>
+
+<section class="card">
+  <div class="section-header">
+    <div>
+      <h2>Ultimele mesaje</h2>
+      <p>Istoricul recent al reminderelor.</p>
+    </div>
+    <a class="text-link" href="{{ url_for('messages') }}">Vezi toate</a>
+  </div>
+
+  {% if recent %}
+    <div class="message-list">
+      {% for m in recent %}
+      <div class="message-row">
+        <div>
+          <strong>{{ m.name }} · {{ m.plate }}</strong>
+          <p>{{ m.body }}</p>
+        </div>
+        <span class="badge">{{ m.status }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty">Nu există încă mesaje trimise.</div>
+  {% endif %}
+</section>
+{% endblock %}
